@@ -8,21 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0c3VpdGUiOiJib3VuIiwiaWF0IjoxNzE2ODg4OTU3ODE3LCJleHAiOjE3MTY4ODg5OTM4MTd9.NqBRDm32Jrq2RhH7ZL_2hcpptQChVkvfEdkzlY2fx6s'
-      PROJECT_NAME: 'Mobile Web Test'
+      PROJECT_NAME: 'Mobile Test'
       DEVICE_IDS: >
         [{"name":"Xiaomi Redmi Note 9 Pro","udid":"75c53f4a", "runTest": true},
-        {"name":"Samsung Galaxy Tab A 10.1","udid":"R52MB0MM5WJ", "runTest": true},
-        {"name": "Apple XS", "udid": "00008020-000125660279002E", "runTest": true},
-        {"name": "Apple 11 Pro Max", "udid": "00008030-000431860A88802E", "runTest": true}]
+        {"name":"Samsung Galaxy Tab A 10.1","udid":"R52MB0MM5WJ", "runTest": true}]
 
     steps:
       - uses: actions/checkout@v2
       - name: 'RobotQA Run'
         run: |
           mvn package -DskipTests=true -q
-          wget file.robotqa.com/get_file_by_path?path=general-files/robotqa-github-ci-appium-web-testng.tar.gz -O robotqa-github-ci-appium-web-testng.tar.gz
-          unzip robotqa-github-ci-appium-web-testng.tar.gz
+          wget file.robotqa.com/get_file_by_path?path=general-files/robotqa-github-ci-appium-mobile-testng.tar.gz -O robotqa-github-ci-appium-mobile-testng.tar.gz
+          unzip robotqa-github-ci-appium-mobile-testng.tar.gz
           cd output
           npm install
           DIR=$GITHUB_WORKSPACE TOKEN=$TOKEN DEVICE_ID=$DEVICE_IDS APP_NAME=$PROJECT_NAME TEST_NAME=$GITHUB_REPOSITORY TEST_DESC=$GITHUB_ACTION node index.js
-
